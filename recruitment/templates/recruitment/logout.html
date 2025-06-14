@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout - Recruitment System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-100 to-purple-100 min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <nav class="bg-indigo-700 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="{% url 'upload' %}" class="text-xl font-bold">Recruitment System</a>
+            <div class="space-x-4">
+                {% if user.is_authenticated %}
+                    <span class="text-sm">Welcome, {{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="hover:text-indigo-200">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hover:text-indigo-200">Login</a>
+                    <a href="{% url 'register' %}" class="hover:text-indigo-200">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+            <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Logged Out</h1>
+
+            <!-- Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="bg-{{ message.tags }}-100 border-l-4 border-{{ message.tags }}-500 text-{{ message.tags }}-700 p-4 mb-6 rounded" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <p class="text-gray-700 text-center mb-4">You have been successfully logged out.</p>
+            <a href="{% url 'login' %}" class="block w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 text-center">
+                Login Again
+            </a>
+        </div>
+    </div>
+</body>
+</html>

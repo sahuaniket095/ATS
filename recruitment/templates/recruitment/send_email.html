@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recruitment System - Send Custom Email</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .error { color: red; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="text"], textarea {
+            width: 100%; padding: 8px; margin-bottom: 10px;
+        }
+        .candidate-list { margin-bottom: 20px; }
+        .btn { 
+            padding: 10px 20px; margin: 5px; 
+            background: #4CAF50; color: white; 
+            border: none; cursor: pointer; 
+            text-decoration: none; 
+        }
+        .btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Send Custom Email to Shortlisted Candidates</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+        </div>
+        <div class="form-group candidate-list">
+            <label>Select Candidates:</label>
+            {% if candidates %}
+                {% for candidate in candidates %}
+                    <div>
+                        <input type="checkbox" id="candidate_{{ candidate.id }}" name="candidate_emails" value="{{ candidate.email }}">
+                        <label for="candidate_{{ candidate.id }}">{{ candidate.name }} ({{ candidate.email }}) - {{ candidate.match_score }}%</label>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No shortlisted candidates available.</p>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn">Send Email</button>
+    </form>
+    <a href="{% url 'upload' %}" class="btn">Back to Upload</a>
+</body>
+</html>

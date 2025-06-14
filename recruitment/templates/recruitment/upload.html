@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recruitment System - Upload</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .error { color: red; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input[type="file"] {
+            width: 100%; padding: 8px; margin-bottom: 10px;
+        }
+        .btn { 
+            padding: 10px 20px; margin: 5px; 
+            background: #4CAF50; color: white; 
+            border: none; cursor: pointer; 
+            text-decoration: none; display: inline-block; 
+        }
+        .btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Upload CV and Job Description</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="cv_files">Upload CVs (PDF):</label>
+            <input type="file" id="cv_files" name="cv_files" multiple accept=".pdf" required>
+        </div>
+        <div class="form-group">
+            <label for="jd_file">Upload Job Description (PDF):</label>
+            <input type="file" id="jd_file" name="jd_file" accept=".pdf" required>
+        </div>
+        <button type="submit" class="btn">Upload</button>
+    </form>
+    <div>
+        <a href="{% url 'shortlisted_candidates' %}" class="btn">View Shortlisted Candidates</a>
+        <a href="{% url 'send_custom_email' %}" class="btn">Send Custom Email</a>
+    </div>
+</body>
+</html>

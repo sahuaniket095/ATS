@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recruitment System - Shortlisted Candidates</title>
+    {% load static %}
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .error { color: red; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .btn { 
+            padding: 10px 20px; margin: 5px; 
+            background: #4CAF50; color: white; 
+            border: none; cursor: pointer; 
+            text-decoration: none; 
+        }
+        .btn:hover { background: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Shortlisted Candidates</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if candidates %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Match Score</th>
+                <th>CV File</th>
+            </tr>
+            {% for candidate in candidates %}
+                <tr>
+                    <td>{{ candidate.name }}</td>
+                    <td>{{ candidate.email }}</td>
+                    <td>{{ candidate.match_score }}%</td>
+                    <td><a href="{{ candidate.cv_file.url }}" target="_blank">View CV</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No shortlisted candidates found.</p>
+    {% endif %}
+    <a href="{% url 'upload' %}" class="btn">Back to Upload</a>
+</body>
+</html>
