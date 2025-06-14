@@ -64,9 +64,9 @@ WSGI_APPLICATION = 'recruitment_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Recruitment System',
-        'USER': 'postgres',
-        'PASSWORD': 'sahuaniket095',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
